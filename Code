@@ -1,0 +1,94 @@
+class Drone {
+public:
+	string name;
+	int speed;
+	int HP;
+	Drone(string n, int sped, int hp) : name(n), speed(sped), HP(hp) {};
+	void ShowInfo() {
+		cout << "Name: " << name << " | " << "Speed: " << speed << "HP: " << HP << endl;
+	}
+};
+void ShowAllDrones(vector<Drone>& drones) {
+	for (int i = 0; i < drones.size(); i++) {
+		cout << "Name: " << drones[i].name
+			<< " | "
+			<< "Speed: " << drones[i].speed
+			<< " | "
+			<< "HP: " << drones[i].HP
+			<< endl;
+	}
+}
+void DeleteDrone(vector<Drone>& drones) {
+	string found;
+	bool Found = false;
+	cout << "Enter name of drone for delete: ";
+	cin >> found;
+	for (auto it = drones.begin(); it != drones.end();) {
+		if (it->name == found) {
+			it = drones.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
+}
+void Repair(vector<Drone>& drones) {
+	string name;
+	bool Found = false;
+	cout << "Enter name of drone which you want heal: ";
+	cin >> name;
+	for (auto itt = drones.begin(); itt != drones.end(); itt++) {
+		if (itt->name == name) {
+			itt->HP += 15;
+			Found = true;
+		}
+		for (auto& Drone : drones) {
+			if (Drone.name == name) {
+				Drone.HP = min(Drone.HP + 15, 100);
+				cout << "Drone have been healed" << " | " << Drone.HP << endl;
+				break;
+			}
+			else if (Drone.HP == 100) {
+				cout << "Maximum HP have reached" << endl;
+				break;
+			}
+		}
+	}
+	if (!Found) {
+		cout << "Drone don't found" << endl;
+	}
+}
+
+int main() {
+	vector<Drone> drones;
+	drones.push_back({"One", 100, 55 });
+	drones.push_back({"Two", 60, 55});
+	drones.push_back({"Three", 10, 55});
+
+	while (true) {
+
+		int choice;
+		cout << "===MENU===\n";
+		cout << "1. Show drones\n";
+		cout << "2. Delete drones\n";
+		cout << "3. Repair drone\n";
+		cout << "4. Exit\n";
+		cout << "Enter your choice: ";
+		cin >> choice;
+
+		if (choice == 1) {
+			ShowAllDrones(drones);
+		}
+		else if(choice == 2){
+			DeleteDrone(drones);
+		}
+		else if (choice == 3) {
+			Repair(drones);
+		}
+		else if (choice == 4) {
+			break;
+			cout << "Programm closed\n";
+		}
+	}
+	return 0;
+}
