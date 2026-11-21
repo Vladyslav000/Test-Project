@@ -4,9 +4,6 @@ public:
 	int speed;
 	int HP;
 	Drone(string n, int sped, int hp) : name(n), speed(sped), HP(hp) {};
-	void ShowInfo() {
-		cout << "Name: " << name << " | " << "Speed: " << speed << "HP: " << HP << endl;
-	}
 };
 void ShowAllDrones(vector<Drone>& drones) {
 	for (int i = 0; i < drones.size(); i++) {
@@ -20,7 +17,6 @@ void ShowAllDrones(vector<Drone>& drones) {
 }
 void DeleteDrone(vector<Drone>& drones) {
 	string found;
-	bool Found = false;
 	cout << "Enter name of drone for delete: ";
 	cin >> found;
 	for (auto it = drones.begin(); it != drones.end();) {
@@ -39,16 +35,11 @@ void Repair(vector<Drone>& drones) {
 	cin >> name;
 	for (auto itt = drones.begin(); itt != drones.end(); itt++) {
 		if (itt->name == name) {
-			itt->HP += 15;
-			Found = true;
+			itt->HP = min(itt->HP + 15, 100);
+            cout << "Drone have been healed" << " | " << endl;
+            break;
 		}
-		for (auto& Drone : drones) {
-			if (Drone.name == name) {
-				Drone.HP = min(Drone.HP + 15, 100);
-				cout << "Drone have been healed" << " | " << Drone.HP << endl;
-				break;
-			}
-			else if (Drone.HP == 100) {
+			else if (itt->HP == 100) {
 				cout << "Maximum HP have reached" << endl;
 				break;
 			}
@@ -62,8 +53,8 @@ void Repair(vector<Drone>& drones) {
 int main() {
 	vector<Drone> drones;
 	drones.push_back({"One", 100, 55 });
-	drones.push_back({"Two", 60, 55});
-	drones.push_back({"Three", 10, 55});
+	drones.push_back({"Two", 60, 65});
+	drones.push_back({"Three", 10, 40});
 
 	while (true) {
 
